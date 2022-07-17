@@ -11,6 +11,8 @@ class Login extends React.Component {
     redirect: false,
   }
 
+  // validação dos inputs, mas decidi tentar por condicional
+
   // validaInputs = () => {
   //   const { email, senha } = this.state;
   //   const senhaMinima = 6;
