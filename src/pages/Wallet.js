@@ -51,11 +51,11 @@ class Wallet extends React.Component {
             Digite o valor
             <input
               name="value"
-              value={forms.value}
+              value={ forms.value }
               type="number"
               data-testid="value-input"
               id="value-input"
-              onChange={(event) => this.handleChange(event)}
+              onChange={ (event) => this.handleChange(event) }
             />
           </label>
           <label htmlFor="description-input">
@@ -64,7 +64,7 @@ class Wallet extends React.Component {
               name="description"
               data-testid="description-input"
               id="description-input"
-              onChange={(event) => this.handleChange(event)}
+              onChange={ (event) => this.handleChange(event) }
             />
           </label>
           <label htmlFor="coins-options">
@@ -72,10 +72,10 @@ class Wallet extends React.Component {
             <select
               name="currency"
               id="coins-options"
-              onChange={(event) => this.handleChange(event)}
+              onChange={ (event) => this.handleChange(event) }
             >
               {currencies.map((coin) => (
-                <option value={coin} key={coin}>
+                <option value={ coin } key={ coin }>
                   {coin}
                 </option>
               ))}
@@ -83,7 +83,7 @@ class Wallet extends React.Component {
           </label>
           <label htmlFor="method">
             <select
-              onChange={(event) => this.handleChange(event)}
+              onChange={ (event) => this.handleChange(event) }
               name="method"
               id="method"
               data-testid="method-input"
@@ -98,7 +98,7 @@ class Wallet extends React.Component {
               name="tag"
               id="tag"
               data-testid="tag-input"
-              onChange={(event) => this.handleChange(event)}
+              onChange={ (event) => this.handleChange(event) }
             >
               <option value="Alimentação">Alimentação</option>
               <option value="Lazer">Lazer</option>
@@ -115,7 +115,7 @@ class Wallet extends React.Component {
                     ...prevState.forms,
                     value: '0',
                   },
-                  actualId: prevState.actualId + 1
+                  actualId: prevState.actualId + 1,
                 }))
             }
             type="button"
@@ -137,6 +137,33 @@ class Wallet extends React.Component {
               <th>Editar/Excluir</th>
             </tr>
           </thead>
+          <tbody>
+            {expenses.map((expense) => (
+              <tr key={ expense.id }>
+                <td>{ expense.description }</td>
+                <td>{ expense.tag }</td>
+                <td>{ expense.method }</td>
+                <td>{ `${parseFloat(expense.value).toFixed(2)}` }</td>
+                <td>{ expense.exchangeRates[`${expense.currency}`].name }</td>
+                <td>
+                  {
+                    `${
+                      parseFloat(
+                        expense.exchangeRates[`${expense.currency}`].ask,
+                      ).toFixed(2)
+                    }`
+                  }
+                </td>
+                <td>
+                  {
+                    (parseFloat(expense.value)
+                    * expense.exchangeRates[`${expense.currency}`].ask).toFixed(2)
+                  }
+                </td>
+                <td>Real</td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
     );
