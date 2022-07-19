@@ -1,6 +1,7 @@
 export const SEND_EMAIL = 'SEND_EMAIL';
 export const CURRENCY = 'CURRENCY';
 export const EXPENSES = 'EXPENSES';
+export const DELETE_EXPENSES = 'DELETE_EXPENSES';
 
 export const sendEmail = (email) => ({
   type: SEND_EMAIL,
@@ -37,3 +38,9 @@ export const fetchSaveExpenses = (form, id) => async (dispatch) => {
   delete responseJson.USDT;
   dispatch(saveExpenses(form, id, responseJson));
 };
+
+// req 9
+export const deleteExpenses = (id) => ({
+  type: DELETE_EXPENSES,
+  payload: id,
+});

@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchRequestCurrencies, fetchSaveExpenses } from '../actions/index';
+import { fetchRequestCurrencies,
+  fetchSaveExpenses, deleteExpenses } from '../actions/index';
 
 class Wallet extends React.Component {
   state = {
@@ -27,6 +28,11 @@ class Wallet extends React.Component {
         [target.name]: target.value,
       },
     }));
+  }
+
+  deleteExpense = (id) => {
+    const { dispatch } = this.props;
+    dispatch(deleteExpenses(id));
   }
 
   render() {
@@ -146,21 +152,24 @@ class Wallet extends React.Component {
                 <td>{ `${parseFloat(expense.value).toFixed(2)}` }</td>
                 <td>{ expense.exchangeRates[`${expense.currency}`].name }</td>
                 <td>
-                  {
-                    `${
-                      parseFloat(
-                        expense.exchangeRates[`${expense.currency}`].ask,
-                      ).toFixed(2)
-                    }`
-                  }
+                  { `${parseFloat(
+                    expense.exchangeRates[`${expense.currency}`].ask,
+                  ).toFixed(2)}`}
                 </td>
                 <td>
-                  {
-                    (parseFloat(expense.value)
-                    * expense.exchangeRates[`${expense.currency}`].ask).toFixed(2)
-                  }
+                  {(parseFloat(expense.value)
+                  * expense.exchangeRates[`${expense.currency}`].ask).toFixed(2)}
                 </td>
                 <td>Real</td>
+                <td>
+                  <button
+                    data-testid="delete-btn"
+                    type="button"
+                    onClick={ () => this.deleteExpense(expense.id) }
+                  >
+                    Excluir
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -183,5 +192,8 @@ Wallet.propTypes = {
   userEmail: PropTypes.string.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
+
+// https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/parseFloat
+// https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Number/toFixed
 
 export default connect(mapStateToProps, null)(Wallet);
