@@ -36,11 +36,11 @@ class Wallet extends React.Component {
       <div>
         <header id="wallet-header">
           Logo
-          <p data-testid="email-field" id="email">{ userEmail }</p>
+          <p data-testid="email-field" id="email">{userEmail}</p>
           <p data-testid="total-field" id="total">
             {expenses.reduce((acc, crr) => {
               acc += (parseFloat(crr.value)
-              * crr.exchangeRates[crr.currency].ask);
+                * crr.exchangeRates[crr.currency].ask);
               return acc;
             }, 0).toFixed(2)}
           </p>
@@ -51,11 +51,11 @@ class Wallet extends React.Component {
             Digite o valor
             <input
               name="value"
-              value={ forms.value }
+              value={forms.value}
               type="number"
               data-testid="value-input"
               id="value-input"
-              onChange={ (event) => this.handleChange(event) }
+              onChange={(event) => this.handleChange(event)}
             />
           </label>
           <label htmlFor="description-input">
@@ -64,7 +64,7 @@ class Wallet extends React.Component {
               name="description"
               data-testid="description-input"
               id="description-input"
-              onChange={ (event) => this.handleChange(event) }
+              onChange={(event) => this.handleChange(event)}
             />
           </label>
           <label htmlFor="coins-options">
@@ -72,18 +72,18 @@ class Wallet extends React.Component {
             <select
               name="currency"
               id="coins-options"
-              onChange={ (event) => this.handleChange(event) }
+              onChange={(event) => this.handleChange(event)}
             >
-              { currencies.map((coin) => (
-                <option value={ coin } key={ coin }>
-                  { coin }
+              {currencies.map((coin) => (
+                <option value={coin} key={coin}>
+                  {coin}
                 </option>
               ))}
             </select>
           </label>
           <label htmlFor="method">
             <select
-              onChange={ (event) => this.handleChange(event) }
+              onChange={(event) => this.handleChange(event)}
               name="method"
               id="method"
               data-testid="method-input"
@@ -98,7 +98,7 @@ class Wallet extends React.Component {
               name="tag"
               id="tag"
               data-testid="tag-input"
-              onChange={ (event) => this.handleChange(event) }
+              onChange={(event) => this.handleChange(event)}
             >
               <option value="Alimentação">Alimentação</option>
               <option value="Lazer">Lazer</option>
@@ -110,18 +110,34 @@ class Wallet extends React.Component {
           <button
             onClick={
               () => dispatch(fetchSaveExpenses(forms, actualId))
-              && this.setState((prevState) => ({
-                forms: {
-                  ...prevState.forms,
-                  value: '0',
-                },
-                actualId: prevState.actualId + 1 }))
+                && this.setState((prevState) => ({
+                  forms: {
+                    ...prevState.forms,
+                    value: '0',
+                  },
+                  actualId: prevState.actualId + 1
+                }))
             }
             type="button"
           >
             Adicionar despesa
           </button>
         </form>
+        <table>
+          <thead>
+            <tr>
+              <th>Descrição</th>
+              <th>Tag</th>
+              <th>Método de pagamento</th>
+              <th>Valor</th>
+              <th>Moeda</th>
+              <th>Câmbio utilizado</th>
+              <th>Valor convertido</th>
+              <th>Moeda de conversão</th>
+              <th>Editar/Excluir</th>
+            </tr>
+          </thead>
+        </table>
       </div>
     );
   }
